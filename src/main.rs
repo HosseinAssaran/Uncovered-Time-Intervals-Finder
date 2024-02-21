@@ -71,6 +71,17 @@ fn main() {
     }
     println!("Total duration of first intervals: {} seconds.\n", calculate_total_duration(&first_intervals));
 
+    let second_intervals = convert_to_time_intervals(&second_array);
+    println!("Second Intervals Array:");
+    for interval in &second_intervals {
+        println!("[{}:{:02}:{:02}, {}:{:02}:{:02}]",
+            interval[0] / 3600, (interval[0] % 3600) / 60, interval[0] % 60,
+            interval[1] / 3600, (interval[1] % 3600) / 60, interval[1] % 60
+        );
+    }
+    println!("Total duration of second intervals: {} seconds.\n", calculate_total_duration(&second_intervals));
+
+
     println!("Second Uncovered Intervals Array:");
     let result = find_uncovered_time(&first_array, &second_array);
     for interval in &result {
