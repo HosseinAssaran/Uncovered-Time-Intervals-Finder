@@ -62,6 +62,7 @@ fn main() {
     let second_array = vec![["00:20:00","00:50:00"], ["1:00:00", "2:15:00"], ["5:05:00", "5:15:00"], ["6:15:00", "6:45:00"], ["8:30:00", "10:30:00"]];
 
     let first_intervals = convert_to_time_intervals(&first_array);
+    println!("First Intervals Array:");
     for interval in &first_intervals {
         println!("[{}:{:02}:{:02}, {}:{:02}:{:02}]",
             interval[0] / 3600, (interval[0] % 3600) / 60, interval[0] % 60,
@@ -70,6 +71,7 @@ fn main() {
     }
     println!("Total duration of first intervals: {} seconds.\n", calculate_total_duration(&first_intervals));
 
+    println!("Second Uncovered Intervals Array:");
     let result = find_uncovered_time(&first_array, &second_array);
     for interval in &result {
         println!("[{}:{:02}:{:02}, {}:{:02}:{:02}]",
