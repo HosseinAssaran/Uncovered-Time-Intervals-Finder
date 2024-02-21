@@ -2,7 +2,8 @@ fn convert_to_minutes(time_str: &str) -> u32 {
     let parts: Vec<&str> = time_str.split(':').collect();
     let hours: u32 = parts[0].parse().unwrap();
     let minutes: u32 = parts[1].parse().unwrap();
-    hours * 60 + minutes
+    let seconds: u32 = parts[2].parse().unwrap();
+    (hours * 60 + minutes) * 60 + seconds
 }
 
 fn find_uncovered_time(first_array: &Vec<[&str; 2]>, second_array: &Vec<[&str; 2]>) -> (Vec<[u32; 2]>, u32) {
@@ -45,8 +46,8 @@ fn find_uncovered_time(first_array: &Vec<[&str; 2]>, second_array: &Vec<[&str; 2
     (uncovered_time, total_duration)
 }
 fn main() {
-    let first_array = vec![["2:00", "2:30"], ["5:00", "6:30"], ["7:00", "7:15"], ["9:00", "10:00"],];
-    let second_array = vec![["00:20","00:50"], ["1:00", "2:15"], ["5:05", "5:15"], ["6:15", "6:45"], ["8:30", "10:30"]];
+    let first_array = vec![["2:00:00", "2:30:00"], ["5:00:00", "6:30:00"], ["7:00:00", "7:15:00"], ["9:00:00", "10:00:00"]];
+    let second_array = vec![["00:20:00","00:50:00"], ["1:00:00", "2:15:00"], ["5:05:00", "5:15:00"], ["6:15:00", "6:45:00"], ["8:30:00", "10:30:00"]];
 
     let (result, total_duration) = find_uncovered_time(&first_array, &second_array);
 
@@ -63,12 +64,12 @@ mod tests {
 
     #[test]
     fn test_find_uncovered_time() {
-        let first_array = vec![["2:00", "2:30"], ["5:00", "6:30"], ["7:00", "7:15"], ["9:00", "10:00"]];
-        let second_array = vec![["00:20","00:50"], ["1:00", "2:15"], ["5:05", "5:15"], ["6:15", "6:45"], ["8:30", "10:30"]];
+        let first_array = vec![["2:00:00", "2:30:00"], ["5:00:00", "6:30:00"], ["7:00:00", "7:15:00"], ["9:00:00", "10:00:00"]];
+        let second_array = vec![["00:20:00","00:50:00"], ["1:00:00", "2:15:00"], ["5:05:00", "5:15:00"], ["6:15:00", "6:45:00"], ["8:30:00", "10:30:00"]];
 
         let (result, total_duration) = find_uncovered_time(&first_array, &second_array);
 
-        assert_eq!(result, vec![[20, 50], [60, 120], [390, 405], [510, 540], [600, 630]]);
-        assert_eq!(total_duration, 165);  // Total duration of uncovered time
+        assert_eq!(result, vec![[20*60, 50*60], [60*60, 120*60], [390*60, 405*60], [510*60, 540*60], [600*60, 630*60]]);
+        assert_eq!(total_duration, 165*60);  // Total duration of uncovered time
     }
 }
